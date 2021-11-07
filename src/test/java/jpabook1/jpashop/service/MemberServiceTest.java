@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @Transactional
 class MemberServiceTest {
@@ -30,7 +31,7 @@ class MemberServiceTest {
         Long saveId = memberService.join(member);
 
         //then
-        assertEquals(member,memberRepository.findOnd(saveId));
+        assertEquals(member,memberRepository.findOne(saveId));
     }
     @Test
     public void duplicate_check() throws Exception{

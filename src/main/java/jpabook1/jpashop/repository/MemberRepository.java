@@ -10,17 +10,17 @@ import java.util.List;
 @Repository
 public class MemberRepository {
     @PersistenceContext
-    private EntityManager em;
+    private final EntityManager em;
 
     public MemberRepository(EntityManager em){
-        em = this.em;
+        this.em=em;
     }
 
     public void save(Member member){
         em.persist(member);
     }
 
-    public Member findOnd(Long id){
+    public Member findOne(Long id){
         return em.find(Member.class,id);
     }
 

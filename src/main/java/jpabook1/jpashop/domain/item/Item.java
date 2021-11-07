@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="dtype")
-@Getter
+@Getter @Setter
 public abstract class Item {
 
     @Id
@@ -24,6 +24,9 @@ public abstract class Item {
     private int price;
     private int stockQuantity;
 
+    /*
+        다대다 관계는 1:N , N:1 관계로 찢는게 좋다.
+    */
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
 
@@ -39,7 +42,7 @@ public abstract class Item {
     public void removeStock(int quantity){
         int restStock = this.stockQuantity-quantity;
         if(restStock<0){
-            throw new NotEnoughStockException("nees more stock");
+            throw new NotEnoughStockException("needs more stock");
         }
         this.stockQuantity=restStock;
     }
