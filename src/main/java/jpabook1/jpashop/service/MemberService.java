@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-class MemberService {
+public class MemberService {
 
     private final MemberRepository memberRepository;
 
