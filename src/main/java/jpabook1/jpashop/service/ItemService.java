@@ -19,6 +19,18 @@ public class ItemService {
     public void saveItem(Item item){
         itemRepository.save(item);
     }
+    @Transactional
+    public void updateItem(Long itemId,String name,int price, int stockQuantity){
+        Item item = itemRepository.findOne(itemId);
+        /**
+         * setter를 되도록이면 쓰지 말자.
+         * item.change(name,price,stockQuantity);
+         * 이렇게 메소드를 만드는 게 훨씬 낫다.
+         */
+        item.setName(name);
+        item.setPrice(price);
+        item.setStockQuantity(stockQuantity);
+    }
 
     public Item findOne(Long id){
         return itemRepository.findOne(id);
