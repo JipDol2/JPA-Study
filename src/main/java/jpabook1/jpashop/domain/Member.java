@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Member {
     @Column(name="member_id")
     private Long id;
 
+    @NotEmpty
     private String name;
 
     //Embedded type 은 사용자가 직접 정의한 값 타입이다. 여기서 Embedded type을 사용하지 않으면,집 주소에 관한 정보
