@@ -98,4 +98,19 @@ public class OrderRepository {
                         " join fetch o.delivery d",Order.class)
                 .getResultList();
     }
+
+    /**
+     * distinct 를 사용한 이유
+     * - 1:N 조인(Order : OrderItems) 이 있으므로 DB row가 증가한다. 그 결과 같은 Order 엔티티의 수도 증가하게 되어,
+     * Order 가 N개가 뽑히는 문제점이 발생한다. 따라서 이를 중복처리해주기 위해 distinct 를 사용한다.
+     */
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o"+
+                        " join fetch o.member m"+
+                        " join fetch o.delivery d"+
+                        " join fetch o.orderItems oi"+
+                        " join fetch oi.item i",Order.class
+                ).getResultList();
+    }
 }

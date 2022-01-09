@@ -44,6 +44,11 @@ public class OrderApiController {
 
     /**
      * V2. 엔티티를 조회해서 DTO로 변환(fetch join 사용 x)
+     * Order Query : 1번
+     * Member Query : 2번
+     * OrderItem Query : 2번
+     * Item Query : 4번
+     * => 총 9번의 쿼리가 발생
      */
     @GetMapping("/api/v2/orders")
     public List<OrderDto> ordersV2(){
@@ -54,6 +59,19 @@ public class OrderApiController {
         return collect;
     }
 
+    /**
+     * V3. 엔티티를 조회해서 DTO로 변환(fetch join 사용 o)
+     * - 단 한번의 쿼리문 발생
+     * - 페이징 시에 N 부분을 포기해야한다.
+     */
+    @GetMapping("/api/v3/orders")
+    public List<OrderDto> ordersV3(){
+        List<Order> orders = orderRepository.findAllWithItem();
+        List<OrderDto> collect = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+        return collect;
+    }
     @Data
     static class OrderDto{
 
